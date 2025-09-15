@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Primer JavaScript</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header {
+            background-color: #4e73df;
+            background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .example-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .btn-js {
+            background-color: #f7df1e;
+            color: black;
+            border: none;
+            margin: 5px;
+        }
+        .btn-js:hover {
+            background-color: #d6c00e;
+        }
+        .code-example {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .result-box {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Mi Primer JavaScript</h1>
+            <p class="lead">Aprendiendo los conceptos básicos de JavaScript</p>
+        </div>
+
+        <!-- Ejemplo 1: Saludo -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="example-box">
+                    <h3>1. Saludo Simple</h3>
+                    <p>JavaScript puede mostrar mensajes al usuario.</p>
+                    <div class="code-example">
+                        // Código JavaScript:<br>
+                        function mostrarSaludo() {<br>
+                        &nbsp;&nbsp;alert('¡Hola! Bienvenido a mi página.');<br>
+                        }
+                    </div>
+                    <button class="btn btn-primary" onclick="mostrarSaludo()">Haz clic para saludar</button>
+                </div>
+            </div>
+
+            <!-- Ejemplo 2: Cambio de color -->
+            <div class="col-md-6">
+                <div class="example-box">
+                    <h3>2. Cambiar Color de Fondo</h3>
+                    <p>JavaScript puede modificar los estilos de la página.</p>
+                    <div class="code-example">
+                        function cambiarColor() {<br>
+                        &nbsp;&nbsp;document.body.style.backgroundColor = '#f0f8ff';<br>
+                        }
+                    </div>
+                    <button class="btn btn-js" onclick="cambiarColor()">Cambiar color de fondo</button>
+                    <button class="btn btn-secondary" onclick="restaurarColor()">Restaurar color original</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejemplo 3: Mostrar/Ocultar elemento -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="example-box">
+                    <h3>3. Mostrar y Ocultar</h3>
+                    <p>JavaScript puede mostrar u ocultar elementos.</p>
+                    <div class="code-example">
+                        function toggleElemento() {<br>
+                        &nbsp;&nbsp;var elemento = document.getElementById('elementoOculto');<br>
+                        &nbsp;&nbsp;if (elemento.style.display === 'none') {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;elemento.style.display = 'block';<br>
+                        &nbsp;&nbsp;} else {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;elemento.style.display = 'none';<br>
+                        &nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                    <button class="btn btn-js" onclick="toggleElemento()">Mostrar/Ocultar</button>
+                    <div id="elementoOculto" class="result-box">
+                        <p>¡Este elemento puede aparecer y desaparecer!</p>
+                        <p>JavaScript es mágico ✨</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejemplo 4: Manipular texto -->
+            <div class="col-md-6">
+                <div class="example-box">
+                    <h3>4. Cambiar Texto</h3>
+                    <p>JavaScript puede modificar el contenido de la página.</p>
+                    <div class="code-example">
+                        function cambiarTexto() {<br>
+                        &nbsp;&nbsp;document.getElementById('textoCambiante').innerHTML = <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;'¡El texto ha sido cambiado con JavaScript!';<br>
+                        }
+                    </div>
+                    <button class="btn btn-js" onclick="cambiarTexto()">Cambiar texto</button>
+                    <div class="result-box">
+                        <p id="textoCambiante">Este es el texto original.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejemplo 5: Calculadora simple -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="example-box">
+                    <h3>5. Calculadora Simple</h3>
+                    <p>JavaScript puede realizar operaciones matemáticas.</p>
+                    <div class="code-example">
+                        function sumar() {<br>
+                        &nbsp;&nbsp;var num1 = parseFloat(document.getElementById('num1').value);<br>
+                        &nbsp;&nbsp;var num2 = parseFloat(document.getElementById('num2').value);<br>
+                        &nbsp;&nbsp;var resultado = num1 + num2;<br>
+                        &nbsp;&nbsp;document.getElementById('resultadoSuma').innerHTML = 'Resultado: ' + resultado;<br>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="number" id="num1" class="form-control" placeholder="Número 1">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" id="num2" class="form-control" placeholder="Número 2">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-js" onclick="sumar()">Sumar</button>
+                        </div>
+                    </div>
+                    <div class="result-box mt-3">
+                        <p id="resultadoSuma">Resultado: </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <h4>¿Cómo ver esta página en XAMPP?</h4>
+                    <ol>
+                        <li>Guarda este código en un archivo con nombre <strong>index.html</strong></li>
+                        <li>Copia el archivo a la carpeta <strong>htdocs</strong> de XAMPP</li>
+                        <li>Inicia los módulos Apache y MySQL en el panel de control de XAMPP</li>
+                        <li>Abre tu navegador y visita: <strong>http://localhost/index.html</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2023 Mi Primer JavaScript. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Ejemplo 1: Saludo
+        function mostrarSaludo() {
+            alert('¡Hola! Bienvenido a mi página.');
+        }
+
+        // Ejemplo 2: Cambio de color
+        function cambiarColor() {
+            document.body.style.backgroundColor = '#f0f8ff';
+        }
+        
+        function restaurarColor() {
+            document.body.style.backgroundColor = '#f8f9fa';
+        }
+
+        // Ejemplo 3: Mostrar/Ocultar
+        function toggleElemento() {
+            var elemento = document.getElementById('elementoOculto');
+            if (elemento.style.display === 'none') {
+                elemento.style.display = 'block';
+            } else {
+                elemento.style.display = 'none';
+            }
+        }
+
+        // Ejemplo 4: Cambiar texto
+        function cambiarTexto() {
+            document.getElementById('textoCambiante').innerHTML = 
+                '¡El texto ha sido cambiado con JavaScript! ' + 
+                'La fecha actual es: ' + new Date().toLocaleTimeString();
+        }
+
+        // Ejemplo 5: Calculadora simple
+        function sumar() {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                document.getElementById('resultadoSuma').innerHTML = 
+                    'Por favor, ingresa números válidos';
+                return;
+            }
+            
+            var resultado = num1 + num2;
+            document.getElementById('resultadoSuma').innerHTML = 
+                'Resultado: ' + num1 + ' + ' + num2 + ' = ' + resultado;
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
