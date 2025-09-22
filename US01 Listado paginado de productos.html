@@ -1,0 +1,45 @@
+// components/ProductList.jsx
+import React, { useState, useEffect } from 'react';
+
+const ProductList = () => {
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [currentPage]);
+
+  const fetchProducts = async () => {
+    const response = await fetch(`/api/products?page=${currentPage}&limit=12`);
+    const data = await response.json();
+    setProducts(data.products);
+    setTotalPages(data.totalPages);
+  };
+
+  return (
+    <div>
+      <h1>Nuestras Cervezas Artesanales</h1>
+      <div className="products-grid">
+        {products.map(product => (
+          <div key={product.id} className="product-card">
+            <img src={product.image} alt={product.name} />
+            <h3>{product.name}</h3>
+            <p>{product.price} CLP</p>
+          </div>
+        ))}
+      </div>
+      
+      {/* Paginación */}
+      <div className="pagination">
+        <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
+          Anterior
+        </button>
+        <span>Página {currentPage} de {totalPages}</span>
+        <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
+          Siguiente
+        </button>
+      </div>
+    </div>
+  );
+};
