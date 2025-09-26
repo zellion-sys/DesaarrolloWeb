@@ -1,7 +1,264 @@
-// components/ProductList.jsx
-import React, { useState, useEffect } from 'react';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US-01: Listado Paginado - Skeleton</title>
+    <style>
+        /* ===== RESET Y VARIABLES ===== */
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #2c3e50;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        /* ===== LAYOUT CONTAINERS ===== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        .grid-system {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #e55a2b);
+            color: white;
+            padding: var(--spacing-lg) 0;
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* ===== PRODUCT GRID SYSTEM ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* ===== PRODUCT CARD COMPONENTS ===== */
+        .product-image {
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product-image::after {
+            content: "🖼️ Imagen del producto";
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .product-content {
+            padding: var(--spacing-md);
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--secondary-color);
+        }
+
+        .product-type {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .page-btn {
+            padding: var(--spacing-xs) var(--spacing-md);
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .page-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin: 0 var(--spacing-sm);
+        }
+
+        /* ===== LOADING STATE ===== */
+        .loading-skeleton .product-card {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: var(--spacing-md);
+            }
+            
+            .container {
+                padding: 0 var(--spacing-xs);
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-image {
+                height: 150px;
+            }
+            
+            .header {
+                padding: var(--spacing-md) 0;
+                margin-bottom: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <header class="header">
+        <div class="container">
+            <h1>🍺 Cervecería Craft & Beer</h1>
+            <p>Catálogo de cervezas artesanales</p>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        <!-- PRODUCTS GRID -->
+        <section class="products-grid">
+            <!-- Product Card 1 -->
+            <article class="product-card">
+                <div class="product-image"></div>
+                <div class="product-content">
+                    <h3 class="product-title">IPA Artesanal</h3>
+                    <span class="product-type">IPA</span>
+                    <p class="product-description">Cerveza IPA con intenso aroma a lúpulo y notas cítricas.</p>
+                    <div class="product-price">$5.500 CLP</div>
+                </div>
+            </article>
+
+            <!-- Product Card 2 -->
+            <article class="product-card">
+                <div class="product-image"></div>
+                <div class="product-content">
+                    <h3 class="product-title">Stout Imperial</h3>
+                    <span class="product-type">Stout</span>
+                    <p class="product-description">Stout robusta con notas de café y chocolate negro.</p>
+                    <div class="product-price">$6.200 CLP</div>
+                </div>
+            </article>
+
+            <!-- Más productos... -->
+        </section>
+
+        <!-- PAGINATION -->
+        <nav class="pagination">
+            <button class="page-btn" disabled>Anterior</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-info">Página 1 de 3</span>
+            <button class="page-btn">Siguiente</button>
+        </nav>
+    </main>
+</body>
+</html>
